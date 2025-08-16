@@ -35,7 +35,7 @@ class DataProcessor:
             cat_cols = self.config["data_processing"]["categorical_columns"]
             num_cols = self.config["data_processing"]["numerical_columns"]
             
-            logger.info("Applying Labe Encoding")
+            logger.info("Applying Label Encoding")
             label_encoder = LabelEncoder()
 
             mappings = {}
