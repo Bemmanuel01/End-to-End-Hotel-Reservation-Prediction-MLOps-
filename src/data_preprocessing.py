@@ -42,12 +42,11 @@ class DataProcessor:
 
             for col in cat_cols:
                 df[col] = label_encoder.fit_transform(df[col])
-        
-            mappings[col] = {label: code for label, code in zip(label_encoder.classes_, label_encoder.transform(label_encoder.classes_))}
+                mappings[col] = {label:code for label, code in zip(label_encoder.classes_ , label_encoder.transform(label_encoder.classes_))}
             
             logger.info("Label Mappings are: ")
             for col, mapping in mappings.items():
-                logger.info("f {col}: {mapping}")
+                logger.info(f"{col}: {mapping}")
                 
             logger.info("Skewness Handling")
             skewness_threshold = self.config["data_processing"]["skewness_threshold"]

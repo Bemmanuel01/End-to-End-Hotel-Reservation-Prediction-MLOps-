@@ -8,3 +8,4 @@ scipy==1.12.0
 imbalanced-learn==0.12.0
 lightgbm
 mlflow
+flask
