@@ -67,7 +67,7 @@ Ingestion script (src/data_ingestion.py) reads data, performs schema validation,
 
 - Model Evaluation
 
-- - Metrics:
+  - Metrics:
     - Accuracy
     - Precision, Recall, F1-score
     - ROC-AUC
@@ -76,7 +76,7 @@ Ingestion script (src/data_ingestion.py) reads data, performs schema validation,
 
 - Model Versioning & Tracking (MLflow)
 
-- - Log:
+  - Log:
     - Dataset version
     - Preprocessing pipeline version
     - Model parameters & metrics
