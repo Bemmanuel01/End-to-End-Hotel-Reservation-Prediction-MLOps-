@@ -86,3 +86,37 @@ Ingestion script (src/data_ingestion.py) reads data, performs schema validation,
 
 - - Set up MLflow UI to monitor experiments
 - - Potential integration with EvidentlyAI or custom scripts for data drift detection (future extension)
+ 
+## ## How the Model Learns and Adapts
+
+- The current model was trained on historical booking data, which captures past customer behavior patterns. However, booking behavior can change over time as new client patterns emerge. To ensure the model stays accurate and relevant, the system must continuously learn and adapt.
+
+- Continuous Data Ingestion & Retraining:
+
+- - Now: The model predicts based on patterns it saw in the past (e.g., long lead times often mean more cancellations).
+
+- - Improvement: Continuously feed the system with new reservations and their actual outcomes (fulfilled or canceled). For example: A client books today → the model predicts → after the stay date, the true outcome is logged as new labeled data.
+- - Benefit: Retraining periodically (weekly or monthly) ensures the model evolves with both old and new data.
+
+- Online Learning (Advanced Option):
+- - Instead of waiting for bulk retraining, incremental learning algorithms (like River, Vowpal Wabbit, or LightGBM in online mode) can be used.
+- - How it works: The model updates itself each time a new data point arrives.
+- - Benefit: The model adapts in near real time to shifting customer behaviors, such as sudden changes during holiday periods.
+
+- Data & Concept Drift Monitoring:
+- - Data Drift: Input features change (e.g., average room price distributions shift).
+- - Concept Drift: The relationship between features and outcomes changes (e.g., previously, “many special requests = more likely to honor,” but this flips later).
+- - Tools: EvidentlyAI or WhyLogs can detect these drifts.
+- - Action: Once drift is detected, retraining is triggered automatically.
+
+- Active Learning Loop:
+- - The model is deployed with a feedback mechanism. For example: If it predicts high cancellation risk, hotel staff can reconfirm with the guest.
+- - The system records whether this action was effective and feeds the result back into training.
+- - Benefit: The model learns not only from raw booking outcomes but also from business interventions.
+
+- Practical Setup in the Project
+- - Data ingestion pipeline: Collect fresh booking data + outcomes.
+- - Model registry (MLflow): Track and version old and new models.
+- - Retraining schedule: Batch (weekly/monthly) or online (continuous).
+- - Deployment monitoring: Log prediction distributions and compare with actual outcomes.
+- - Feedback loop: Trigger retraining when model performance drops.
